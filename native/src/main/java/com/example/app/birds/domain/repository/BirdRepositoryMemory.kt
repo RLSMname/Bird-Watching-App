@@ -48,6 +48,10 @@ class BirdRepositoryMemory @Inject constructor(private val birds: MutableList<Bi
     }
 
     override suspend fun updateBird(bird: Bird): Either<Errors, Bird> {
+        if (birds.any { it.name == bird.name }) {
+            return Either.Left(Errors.BirdAlreadyExists)
+        }
+
         val index = birds.indexOfFirst { it.id == bird.id }
         return if (index != -1) {
             birds[index] = bird

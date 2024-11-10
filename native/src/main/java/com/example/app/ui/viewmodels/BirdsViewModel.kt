@@ -40,7 +40,7 @@ class BirdsViewModel @Inject constructor(private val birdRepository: BirdReposit
                         )
                     }
                     Log.d("Test", "Error obtaining birds $error")
-                    //sendEvent(Event.Toast(error.error.message))
+                    sendEvent(Event.Toast(error.error.message))
                 }
             _state.update { it.copy(isLoading = false) }
         }
@@ -70,6 +70,7 @@ class BirdsViewModel @Inject constructor(private val birdRepository: BirdReposit
             }.onLeft { error ->
                 _state.update { it.copy(error = error.name) }
                 Log.d("TEST", "Error updating bird: $error")
+                sendEvent(Event.Toast(error.text))
             }
             _state.update { it.copy(isLoading = false) }
         }
@@ -92,6 +93,7 @@ class BirdsViewModel @Inject constructor(private val birdRepository: BirdReposit
             }.onLeft { error ->
                 _state.update { it.copy(error = error.name) }
                 Log.d("TEST", "Error adding bird: $error")
+                sendEvent(Event.Toast(error.text))
             }
             _state.update { it.copy(isLoading = false) }
         }
@@ -114,6 +116,7 @@ class BirdsViewModel @Inject constructor(private val birdRepository: BirdReposit
                     it.copy(error = error.name)
                 }
                 Log.d("Test", "Error deleting bird with ID $id: $error")
+                sendEvent(Event.Toast(error.text))
             }
 
             _state.update { it.copy(isLoading = false) }
