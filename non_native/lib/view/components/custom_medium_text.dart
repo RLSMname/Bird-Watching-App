@@ -7,12 +7,12 @@ class CustomMediumText extends StatelessWidget {
   final Color color;
 
   const CustomMediumText({
-    Key? key,
+    super.key,
     required this.text,
     this.size = 11.0,
     this.lineHeight = 23.0,
     this.color = Colors.black,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

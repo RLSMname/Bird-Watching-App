@@ -62,7 +62,7 @@ class _BirdCardState extends State<BirdCard> {
             const SizedBox(
               height: 12,
             ),
-            CustomWhiteText(text: widget.habitatTemp),
+            CustomWhiteText(text: widget.habitatTemp.toUpperCase()),
             const SizedBox(
               height: 12,
             ),
