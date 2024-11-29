@@ -1,37 +1,54 @@
 import '../model/bird.dart';
 
 class BirdValidator {
-  final int maxOrderLength = 16; // Phaethontiformes
-  final int maxFamilyLength = 13; // Coraciiformes or Dromaiidae
+  static const int _maxOrderLength = 16; // Phaethontiformes
+  static const int _maxFamilyLength = 13; // Coraciiformes or Dromaiidae
 
-  List<String> validate(Bird bird) {
+  static List<String> validate(Bird bird) {
     final List<String> errors = [];
 
-    // Validate name
-    if (bird.name.isEmpty) {
-      errors.add("Name cannot be empty.");
-    } else if (!RegExp(r'^[a-zA-Z\s]+$').hasMatch(bird.name)) {
-      errors.add("Name must only contain letters and spaces.");
-    }
+    String? name = validateName(bird.name);
+    String? order = validateOrder(bird.order);
+    String? family = validateFamily(bird.family);
 
-    // Validate order
-    if (bird.order.isEmpty) {
-      errors.add("Order cannot be empty.");
-    } else if (!RegExp(r'^[a-zA-Z]+$').hasMatch(bird.order)) {
-      errors.add("Order must only contain letters, no spaces.");
-    } else if (bird.order.length > maxOrderLength) {
-      errors.add("Order must not exceed $maxOrderLength letters.");
-    }
-
-    // Validate family
-    if (bird.family.isEmpty) {
-      errors.add("Family cannot be empty.");
-    } else if (!RegExp(r'^[a-zA-Z]+$').hasMatch(bird.family)) {
-      errors.add("Family must only contain letters, no spaces.");
-    } else if (bird.family.length > maxFamilyLength) {
-      errors.add("Family must not exceed $maxFamilyLength letters.");
-    }
+    if (name != null) errors.add(name);
+    if (order != null) errors.add(order);
+    if (family != null) errors.add(family);
 
     return errors;
+  }
+
+  static String? validateName(String? name) {
+    if (name == null) return "Name cannot be empty.";
+    if (name.isEmpty) {
+      return "Name cannot be empty.";
+    } else if (!RegExp(r'^[a-zA-Z\s]+$').hasMatch(name)) {
+      return "Name must only contain letters and spaces.";
+    }
+    return null;
+  }
+
+  static String? validateOrder(String? order) {
+    if (order == null) return "Order cannot be empty.";
+    if (order.isEmpty) {
+      return "Order cannot be empty.";
+    } else if (!RegExp(r'^[a-zA-Z]+$').hasMatch(order)) {
+      return "Order must only contain letters, no spaces.";
+    } else if (order.length > _maxOrderLength) {
+      return "Order must not exceed $_maxOrderLength letters.";
+    }
+    return null;
+  }
+
+  static String? validateFamily(String? family) {
+    if (family == null) return "Family cannot be empty.";
+    if (family.isEmpty) {
+      return "Family cannot be empty.";
+    } else if (!RegExp(r'^[a-zA-Z]+$').hasMatch(family)) {
+      return "Family must only contain letters, no spaces.";
+    } else if (family.length > _maxFamilyLength) {
+      return "Family must not exceed $_maxFamilyLength letters.";
+    }
+    return null;
   }
 }

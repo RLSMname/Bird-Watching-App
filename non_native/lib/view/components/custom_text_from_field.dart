@@ -6,13 +6,15 @@ class CustomTextFormField extends StatelessWidget {
   final void Function(String?) onSaved;
   final String labelText;
   final String hintText;
+  final String initialValue;
 
   const CustomTextFormField(
       {super.key,
       required this.validator,
       required this.onSaved,
       required this.labelText,
-      required this.hintText});
+      required this.hintText,
+      required this.initialValue});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +26,7 @@ class CustomTextFormField extends StatelessWidget {
           size: 12,
         ),
         TextFormField(
+          initialValue: initialValue,
           onSaved: onSaved,
           validator: validator,
           decoration: InputDecoration(

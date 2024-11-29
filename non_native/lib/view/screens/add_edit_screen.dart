@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:non_native/view/components/footer_button.dart';
 import 'package:non_native/view/components/my_form.dart';
 
+import '../../model/bird.dart';
 import '../components/header.dart';
 
 class AddEditScreen extends StatelessWidget {
-  const AddEditScreen({super.key});
+  const AddEditScreen(
+      {super.key,
+      required this.headerText,
+      required this.headerSubText,
+      this.existingBird});
 
-  final String headerText = "Placeholder";
-  final String headerSubText = "Placeholder";
+  final String headerText;
+  final String headerSubText;
+  final Bird? existingBird;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: [
           Header(text: headerText, subText: headerSubText),
@@ -20,12 +26,12 @@ class AddEditScreen extends StatelessWidget {
             height: 30,
           ),
           //form
-          const Expanded(
-            flex: 4,
-            child: MyForm(),
+          Expanded(
+            child: MyForm(
+              existingBird: existingBird,
+            ),
           ),
           //footer button
-          Expanded(flex: 1, child: FooterButton(onPressed: () {}, text: "ADD"))
         ],
       ),
     );

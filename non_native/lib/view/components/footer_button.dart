@@ -13,10 +13,17 @@ class FooterButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      //padding: const EdgeInsets.symmetric(vertical: 40),
       width: double.infinity,
+      height: 140,
       color: _myColor,
       child: FilledButton(
-          style: FilledButton.styleFrom(backgroundColor: _myColor),
+          style: FilledButton.styleFrom(
+            backgroundColor: _myColor,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+          ),
           onPressed: onPressed,
           child: CustomWhiteText(
             text: text,
