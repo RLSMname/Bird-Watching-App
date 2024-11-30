@@ -5,7 +5,8 @@ import '../../model/bird.dart';
 class DeleteBirdDialog extends StatelessWidget {
   final bool showDialog;
   final Bird? birdToDelete;
-  final Function(int) onDeleteConfirmed;
+  //final Function(int) onDeleteConfirmed;
+  final Future<void> Function(int) onDeleteConfirmed;
   final Function onDismiss;
 
   const DeleteBirdDialog({
@@ -29,8 +30,8 @@ class DeleteBirdDialog extends StatelessWidget {
                 child: const Text("Cancel"),
               ),
               TextButton(
-                onPressed: () {
-                  onDeleteConfirmed(birdToDelete!.id);
+                onPressed: () async {
+                  await onDeleteConfirmed(birdToDelete!.id);
                 },
                 child: const Text("Confirm"),
               ),

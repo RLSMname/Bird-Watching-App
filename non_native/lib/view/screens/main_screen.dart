@@ -1,82 +1,115 @@
 import 'package:flutter/material.dart';
-import 'package:non_native/model/habitat.dart';
+import 'package:non_native/util/routes.dart';
 import 'package:non_native/view/components/header.dart';
 import 'package:non_native/view/components/plus_button.dart';
+import 'package:non_native/view/screens/add_edit_screen.dart';
+import 'package:non_native/viewmodel/bird_view_model.dart';
+import 'package:provider/provider.dart';
 
-import '../../model/bird.dart';
+import '../../util/api_response.dart';
 import '../components/bird_list_view.dart';
 
-class MainScreen extends StatelessWidget {
-  final String headerText = "Your collection";
-  final String headerSubText = "ALWAYS READY FOR A NEW ADVENTURE";
-
-  final void Function(int) onDeleteBird;
-  final void Function() onClickPlusButton;
-  final void Function(int) onEditBird;
-
-  MainScreen({
+class MainScreen extends StatefulWidget {
+  const MainScreen({
     super.key,
-    required this.onDeleteBird,
-    required this.onClickPlusButton,
-    required this.onEditBird,
   });
 
-  final List<Bird> birds = [
-    Bird(
-        id: 1,
-        name: 'Eagle',
-        order: 'Accipitriformes',
-        family: 'Accipitridae',
-        habitat: Habitat.forest,
-        sightCount: 5),
-    Bird(
-        id: 2,
-        name: 'Sparrow',
-        order: 'Passeriformes',
-        family: 'Passeridae',
-        habitat: Habitat.grassland,
-        sightCount: 3),
-    Bird(
-        id: 3,
-        name: 'Parrot',
-        order: 'Psittaciformes',
-        family: 'Psittacidae',
-        habitat: Habitat.wetland,
-        sightCount: 8),
-    Bird(
-        id: 4,
-        name: 'Pigeon',
-        order: 'Columbiformes',
-        family: 'Columbidae',
-        habitat: Habitat.forest,
-        sightCount: 4),
-  ];
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  final String headerText = "Your collection";
+
+  final String headerSubText = "ALWAYS READY FOR A NEW ADVENTURE";
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      Provider.of<BirdViewModel>(context, listen: false).fetchAll();
+    });
+  }
+
+  Future<void> onDeleteBird(int id) async {
+    print("DELETING WITH ID $id");
+    try {
+      await Provider.of<BirdViewModel>(context, listen: false).deleteBird(id);
+      print("Bird with ID $id deleted successfully.");
+    } catch (e) {
+      print("Error deleting bird: $e");
+    }
+  }
+
+  void onClickPlusButton() {
+    print("CLICKED PLUS BUTTON");
+    //navigate to add screen
+    Navigator.pushNamed(context, RouteNames.add,
+        arguments: AddEditScreenArguments(
+            headerText: headerText,
+            headerSubText: headerSubText,
+            existingBird: null));
+  }
+
+  void onEditBird(int id) {
+    print("EDITING WITH ID $id");
+    // Navigator.pushNamed(context, RouteNames.edit,
+    //     arguments: AddEditScreenArguments(
+    //         headerText: headerText,
+    //         headerSubText: headerSubText,
+    //         existingBird: null));
+  }
+
+  Widget mainWidget(BirdViewModel birdViewModel) {
+    ApiResponse apiResponse = birdViewModel.response;
+    switch (apiResponse.status) {
+      case Status.loading:
+        return const Center(child: CircularProgressIndicator());
+      case null:
+        return const Center(
+          child: Text('Please try again latter!!!'),
+        );
+      case Status.completed:
+        return Expanded(
+          child: BirdListView(
+            birds: apiResponse.data,
+            isLoading: false,
+            onDeleteBird: onDeleteBird,
+            onEditBird: onEditBird,
+          ),
+        );
+
+      case Status.error:
+        return const Center(
+          child: Text('Please try again latter!!!'),
+        );
+      case Status.initial:
+        //birdViewModel.fetchAll();
+        return const Center(child: CircularProgressIndicator());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Header(text: headerText, subText: headerSubText),
-          const SizedBox(
-            height: 30,
-          ),
-          //plus button
-          PlusButton(onClick: onClickPlusButton),
-          //list
-          const SizedBox(
-            height: 20,
-          ),
-          Expanded(
-            child: BirdListView(
-              birds: birds,
-              isLoading: false,
-              onDeleteBird: onDeleteBird,
-              onEditBird: onEditBird,
+    return Consumer<BirdViewModel>(builder: (context, birdViewModel, child) {
+      return Scaffold(
+        body: Column(
+          children: [
+            Header(text: headerText, subText: headerSubText),
+            const SizedBox(
+              height: 30,
             ),
-          ),
-        ],
-      ),
-    );
+            //plus button
+            PlusButton(onClick: onClickPlusButton),
+            //list
+            const SizedBox(
+              height: 20,
+            ),
+
+            mainWidget(birdViewModel)
+          ],
+        ),
+      );
+    });
   }
 }

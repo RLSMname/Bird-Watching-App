@@ -8,7 +8,8 @@ import 'loading_dialog.dart';
 class BirdListView extends StatefulWidget {
   final List<Bird> birds;
   final bool isLoading;
-  final Function(int) onDeleteBird;
+  // final Function(int) onDeleteBird;
+  final Future<void> Function(int) onDeleteBird;
   final Function(int) onEditBird;
 
   const BirdListView({
@@ -69,8 +70,8 @@ class _BirdListViewState extends State<BirdListView> {
           DeleteBirdDialog(
             showDialog: showDialog,
             birdToDelete: birdToDelete,
-            onDeleteConfirmed: (id) {
-              widget.onDeleteBird(id);
+            onDeleteConfirmed: (id) async {
+              await widget.onDeleteBird(id);
               setState(() {
                 showDialog = false;
               });
