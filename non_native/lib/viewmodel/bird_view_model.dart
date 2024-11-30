@@ -73,19 +73,59 @@ class BirdViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchBirdById(int id) async {
-    _apiResponse = ApiResponse.loading();
-    notifyListeners();
-
+  Future<Bird?> fetchBirdById(int id) async {
     try {
       final Bird bird = _birds.firstWhere(
         (bird) => bird.id == id,
       );
-      _apiResponse = ApiResponse.completed(bird);
+      return bird;
     } catch (e) {
-      _apiResponse = ApiResponse.error(Errors.notFound.text);
-      print("Error fetching bird by id: $e");
+      print("ERROR E: ${e.toString()}");
+      return null;
     }
-    notifyListeners();
+  }
+
+  Future<Bird?> addBird(Bird bird) async {
+    try {
+      final newBird = Bird(
+          id: _nextId,
+          name: bird.name,
+          order: bird.order,
+          family: bird.family,
+          habitat: bird.habitat,
+          sightCount: bird.sightCount);
+      _birds.add(newBird);
+      _nextId++;
+      notifyListeners();
+      return newBird;
+    } catch (e) {
+      print("Error:${e.toString()}");
+      return null;
+    }
+  }
+
+  Future<Bird?> updateBird(Bird newValues) async {
+    try {
+      print("IN UPDATE BIRD WITH THIS NAME: ${newValues.name}");
+      final newBird = Bird(
+          id: newValues.id,
+          name: newValues.name,
+          order: newValues.order,
+          family: newValues.family,
+          habitat: newValues.habitat,
+          sightCount: newValues.sightCount);
+
+      final index = _birds.indexWhere((bird) => bird.id == newValues.id);
+      if (index != -1) {
+        _birds[index] = newBird;
+      }
+      print("BIRD AT INDEX ${index} has name ${_birds[index].name}");
+
+      notifyListeners();
+      return newBird;
+    } catch (e) {
+      print("Error:${e.toString()}");
+      return null;
+    }
   }
 }

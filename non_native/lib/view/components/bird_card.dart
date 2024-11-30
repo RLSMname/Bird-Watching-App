@@ -79,9 +79,6 @@ class _BirdCardState extends State<BirdCard> {
                     backGroundColor: myEditColor,
                     enabled: enabledButtons,
                     onClick: () {
-                      setState(() {
-                        enabledButtons = false;
-                      });
                       widget.onEditClick();
                     },
                   ),

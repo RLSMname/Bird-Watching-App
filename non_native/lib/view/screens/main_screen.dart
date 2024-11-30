@@ -46,18 +46,16 @@ class _MainScreenState extends State<MainScreen> {
     //navigate to add screen
     Navigator.pushNamed(context, RouteNames.add,
         arguments: AddEditScreenArguments(
-            headerText: headerText,
-            headerSubText: headerSubText,
-            existingBird: null));
+            headerText: "Add a new bird",
+            headerSubText: "GET A NEW FRIEND",
+            birdId: null));
   }
 
   void onEditBird(int id) {
     print("EDITING WITH ID $id");
-    // Navigator.pushNamed(context, RouteNames.edit,
-    //     arguments: AddEditScreenArguments(
-    //         headerText: headerText,
-    //         headerSubText: headerSubText,
-    //         existingBird: null));
+    Navigator.pushNamed(context, RouteNames.edit,
+        arguments: AddEditScreenArguments(
+            headerText: "Edit bird", headerSubText: "", birdId: id));
   }
 
   Widget mainWidget(BirdViewModel birdViewModel) {

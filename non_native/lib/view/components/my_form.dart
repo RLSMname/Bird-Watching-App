@@ -10,11 +10,15 @@ import 'footer_button.dart';
 import 'habitat_drop_down.dart';
 
 class MyForm extends StatefulWidget {
-  const MyForm({
-    super.key,
-    this.existingBird,
-  });
+  const MyForm(
+      {super.key,
+      this.existingBird,
+      required this.buttonText,
+      required this.onSubmit});
   final Bird? existingBird;
+  final String buttonText;
+
+  final Future<Bird?> Function(BirdFormState state) onSubmit;
 
   @override
   State<MyForm> createState() => _MyFormState();
@@ -25,11 +29,13 @@ class _MyFormState extends State<MyForm> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  void _onSubmit() {
+  Future<void> _onSubmit() async {
     if (_formKey.currentState!.validate()) {
       //this calls all the updates
       _formKey.currentState!.save();
       print(_birdFormState.stateToString());
+      await widget.onSubmit(_birdFormState);
+      Navigator.pop(context);
     }
   }
 
@@ -124,7 +130,7 @@ class _MyFormState extends State<MyForm> {
             ),
 
             const Spacer(),
-            FooterButton(onPressed: _onSubmit, text: "ADD")
+            FooterButton(onPressed: _onSubmit, text: widget.buttonText)
           ],
         ));
   }

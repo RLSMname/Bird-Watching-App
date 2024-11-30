@@ -23,7 +23,7 @@ class BirdValidator {
     if (name.isEmpty) {
       return "Name cannot be empty.";
     } else if (!RegExp(r'^[a-zA-Z\s]+$').hasMatch(name)) {
-      return "Name must only contain letters and spaces.";
+      return "Only letters and spaces.";
     }
     return null;
   }
@@ -33,9 +33,9 @@ class BirdValidator {
     if (order.isEmpty) {
       return "Order cannot be empty.";
     } else if (!RegExp(r'^[a-zA-Z]+$').hasMatch(order)) {
-      return "Order must only contain letters, no spaces.";
+      return "Only letters.";
     } else if (order.length > _maxOrderLength) {
-      return "Order must not exceed $_maxOrderLength letters.";
+      return "Less than ${_maxOrderLength + 1} letters.";
     }
     return null;
   }
@@ -45,9 +45,9 @@ class BirdValidator {
     if (family.isEmpty) {
       return "Family cannot be empty.";
     } else if (!RegExp(r'^[a-zA-Z]+$').hasMatch(family)) {
-      return "Family must only contain letters, no spaces.";
+      return "Only letters.";
     } else if (family.length > _maxFamilyLength) {
-      return "Family must not exceed $_maxFamilyLength letters.";
+      return "Less than ${_maxFamilyLength + 1} letters.";
     }
     return null;
   }
