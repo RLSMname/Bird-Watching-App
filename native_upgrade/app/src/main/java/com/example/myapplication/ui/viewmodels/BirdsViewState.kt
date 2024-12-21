@@ -1,6 +1,6 @@
-package com.example.app.ui.viewmodels
+package com.example.myapplication.ui.viewmodels
 
-import com.example.app.birds.domain.model.Bird
+import com.example.myapplication.birds.domain.model.Bird
 
 data class BirdsViewState(
     val isLoading: Boolean = false,

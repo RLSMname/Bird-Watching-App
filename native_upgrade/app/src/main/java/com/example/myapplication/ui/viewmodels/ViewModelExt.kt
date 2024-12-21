@@ -1,8 +1,8 @@
-package com.example.app.ui.viewmodels
+package com.example.myapplication.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.app.util.EventBus
+import com.example.myapplication.util.EventBus
 import kotlinx.coroutines.launch
 
 fun ViewModel.sendEvent(event: Any) {

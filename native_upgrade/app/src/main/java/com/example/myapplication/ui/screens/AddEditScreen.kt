@@ -1,9 +1,12 @@
-package com.example.app.ui.screens
+package com.example.myapplication.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,14 +17,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.app.birds.domain.model.Bird
-import com.example.app.birds.domain.model.Habitat
-import com.example.app.ui.components.CustomForm
-import com.example.app.ui.components.CustomMediumText
-import com.example.app.ui.components.FooterButton
-import com.example.app.ui.components.Header
-import com.example.app.ui.viewmodels.BirdFormState
-import com.example.app.util.BirdValidator
+import com.example.myapplication.birds.domain.model.Bird
+import com.example.myapplication.birds.domain.model.Habitat
+import com.example.myapplication.ui.components.CustomForm
+import com.example.myapplication.ui.components.CustomMediumText
+import com.example.myapplication.ui.components.FooterButton
+import com.example.myapplication.ui.components.Header
+import com.example.myapplication.ui.viewmodels.BirdFormState
+import com.example.myapplication.util.BirdValidator
 import java.util.Locale
 
 @Composable
@@ -31,8 +34,12 @@ fun AddEditScreen(
     buttonText: String,
     modifier: Modifier = Modifier,
     onAddBird: (Bird) -> Unit,
-    existingBird: Bird? = null
+    existingBird: Bird? = null,
+    onBack : ()->Unit
 ) {
+
+    Log.d("DBTEST", "EXISTING BIRD=$existingBird")
+
     var birdFormState by remember {
         mutableStateOf(
             BirdFormState(
@@ -45,6 +52,8 @@ fun AddEditScreen(
         )
     }
 
+    Log.d("DBTEST", "BIRDFORMSTATE IN ADDEDITBIRD: $birdFormState;")
+
     var validationErrors by remember { mutableStateOf<List<String>>(emptyList()) }
 
     var enabled by remember { mutableStateOf<Boolean>(true) }
@@ -54,6 +63,7 @@ fun AddEditScreen(
 
     Column(modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         Header(text = text, subText = subText, modifier.weight(1f))
+        Button(onClick = onBack ) { Text("GO BACK") }
         CustomForm(
             modifier.weight(4f),
             birdFormState = birdFormState,
@@ -87,7 +97,12 @@ fun AddEditScreen(
 
             if (validationErrors.isEmpty()) {
                 enabled = false
-                onAddBird(newBird)
+                try{
+                    onAddBird(newBird)
+                }
+               catch (exception: Exception){
+                   enabled = true
+               }
 
             }
 

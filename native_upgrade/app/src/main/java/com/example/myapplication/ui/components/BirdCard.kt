@@ -1,4 +1,4 @@
-package com.example.app.ui.components
+package com.example.myapplication.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -19,9 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.app.ui.theme.DarkGreen
-import com.example.app.ui.theme.DarkOrange
-import com.example.app.ui.theme.LightGreen
+import com.example.myapplication.ui.theme.DarkGreen
+import com.example.myapplication.ui.theme.DarkOrange
+import com.example.myapplication.ui.theme.LightGreen
 
 
 @Composable

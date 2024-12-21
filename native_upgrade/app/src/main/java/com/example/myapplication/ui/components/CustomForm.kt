@@ -1,4 +1,4 @@
-package com.example.app.ui.components
+package com.example.myapplication.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.app.ui.viewmodels.BirdFormState
+import com.example.myapplication.ui.viewmodels.BirdFormState
 
 @Composable
 fun CustomForm(

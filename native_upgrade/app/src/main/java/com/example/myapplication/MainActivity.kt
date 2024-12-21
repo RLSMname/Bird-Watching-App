@@ -1,4 +1,4 @@
-package com.example.app
+package com.example.myapplication
 
 import android.os.Bundle
 import android.widget.Toast
@@ -14,10 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
-import com.example.app.navigation.BirdsNavHost
-import com.example.app.ui.theme.AppTheme
-import com.example.app.util.Event
-import com.example.app.util.EventBus
+import com.example.myapplication.navigation.BirdsNavHost
+import com.example.myapplication.ui.theme.AppTheme
+import com.example.myapplication.util.Event
+import com.example.myapplication.util.EventBus
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

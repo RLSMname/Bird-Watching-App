@@ -1,8 +1,8 @@
-package com.example.app.birds.domain.repository
+package com.example.myapplication.birds.domain.repository
 
 import arrow.core.Either
-import com.example.app.birds.domain.model.Bird
-import com.example.app.util.Errors
+import com.example.myapplication.birds.domain.model.Bird
+import com.example.myapplication.util.Errors
 
 
 interface BirdRepository {

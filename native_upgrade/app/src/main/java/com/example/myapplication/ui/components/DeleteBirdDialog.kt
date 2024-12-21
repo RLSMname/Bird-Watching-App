@@ -1,10 +1,10 @@
-package com.example.app.ui.components
+package com.example.myapplication.ui.components
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import com.example.app.birds.domain.model.Bird
+import com.example.myapplication.birds.domain.model.Bird
 
 @Composable
 fun DeleteBirdDialog(

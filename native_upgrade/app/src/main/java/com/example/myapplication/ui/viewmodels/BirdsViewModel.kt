@@ -1,10 +1,11 @@
-package com.example.app.ui.viewmodels
+package com.example.myapplication.ui.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.app.birds.domain.model.Bird
-import com.example.app.birds.domain.repository.BirdRepository
+import com.example.myapplication.birds.domain.model.Bird
+import com.example.myapplication.birds.domain.repository.BirdRepository
+import com.example.myapplication.util.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -39,8 +40,8 @@ class BirdsViewModel @Inject constructor(private val birdRepository: BirdReposit
                             error = error.name
                         )
                     }
-                    Log.d("Test", "Error obtaining birds $error")
-                    sendEvent(Event.Toast(error.error.message))
+                    Log.d("LOG", "Error obtaining birds $error")
+                    sendEvent(Event.Toast(error.text))
                 }
             _state.update { it.copy(isLoading = false) }
         }
@@ -50,13 +51,17 @@ class BirdsViewModel @Inject constructor(private val birdRepository: BirdReposit
         var bird: Bird? = null;
         viewModelScope.launch {
             birdRepository.getBirdById(id).onRight { birdWithId ->
+                Log.d("DBTEST", "VIEW MODEL BIRD WITH ID: $birdWithId")
                 bird = birdWithId
             }.onLeft {
                 Log.d("TEST", "No bird with this id")
             }
+
         }
+        Log.d("DBTEST", "VIEW MODEL BIRD BEFORE RETURN: $bird")
         return bird
     }
+
 
     fun updateBird(updatedBirdValues: Bird) {
         Log.d("TEST", "BIRD RECEIVED FROM UI $updatedBirdValues")
@@ -69,7 +74,7 @@ class BirdsViewModel @Inject constructor(private val birdRepository: BirdReposit
                 _state.update { it.copy(birds = updatedBirds) }
             }.onLeft { error ->
                 _state.update { it.copy(error = error.name) }
-                Log.d("TEST", "Error updating bird: $error")
+                Log.d("LOG", "Error updating bird: $error")
                 sendEvent(Event.Toast(error.text))
             }
             _state.update { it.copy(isLoading = false) }
@@ -92,8 +97,9 @@ class BirdsViewModel @Inject constructor(private val birdRepository: BirdReposit
                 Log.d("TEST", "BIRD ADDED TO REPO, LIST STATE AFTERWARDS: ${_state.value.birds}")
             }.onLeft { error ->
                 _state.update { it.copy(error = error.name) }
-                Log.d("TEST", "Error adding bird: $error")
+                Log.d("LOG", "Error adding bird: $error")
                 sendEvent(Event.Toast(error.text))
+
             }
             _state.update { it.copy(isLoading = false) }
         }
@@ -115,7 +121,7 @@ class BirdsViewModel @Inject constructor(private val birdRepository: BirdReposit
                 _state.update {
                     it.copy(error = error.name)
                 }
-                Log.d("Test", "Error deleting bird with ID $id: $error")
+                Log.d("LOG", "Error deleting bird with ID $id: $error")
                 sendEvent(Event.Toast(error.text))
             }
 

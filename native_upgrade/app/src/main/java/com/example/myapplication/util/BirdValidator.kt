@@ -1,6 +1,6 @@
-package com.example.app.util
+package com.example.myapplication.util
 
-import com.example.app.birds.domain.model.Bird
+import com.example.myapplication.birds.domain.model.Bird
 
 class BirdValidator {
     private val maxOrderLength = 16 // Phaethontiformes

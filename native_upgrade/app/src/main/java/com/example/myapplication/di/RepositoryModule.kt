@@ -1,7 +1,8 @@
-package com.example.app.di
+package com.example.myapplication.di
 
-import com.example.app.birds.domain.repository.BirdRepository
-import com.example.app.birds.domain.repository.BirdRepositoryMemory
+import com.example.myapplication.birds.domain.repository.BirdRepository
+import com.example.myapplication.birds.domain.repository.BirdRepositoryDb
+import com.example.myapplication.birds.domain.repository.BirdRepositoryMemory
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -12,7 +13,10 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
 
+//    @Binds
+//    @Singleton
+//    abstract fun provideBirdsRepository(impl: BirdRepositoryMemory) : BirdRepository
     @Binds
     @Singleton
-    abstract fun provideBirdsRepository(impl: BirdRepositoryMemory) : BirdRepository
+    abstract fun provideBirdsRepository(impl: BirdRepositoryDb) : BirdRepository
 }

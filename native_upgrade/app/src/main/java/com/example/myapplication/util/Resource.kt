@@ -1,4 +1,4 @@
-package com.example.app.util
+package com.example.myapplication.util
 
 //sealed class Resource<T>(val data: T? = null, val errors: Errors? = null){
 //    class Success<T>(data: T?):Resource<T>(data)

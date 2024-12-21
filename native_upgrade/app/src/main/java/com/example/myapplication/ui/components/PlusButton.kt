@@ -1,4 +1,4 @@
-package com.example.app.ui.components
+package com.example.myapplication.ui.components
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -12,9 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.app.ui.theme.DarkOrange
-import com.example.app.ui.theme.MediumOrange
-import com.example.app.ui.theme.White
+import com.example.myapplication.ui.theme.MediumOrange
+import com.example.myapplication.ui.theme.White
 
 @Composable
 fun PlusButton(
